@@ -52,19 +52,28 @@ public class ExercicesOptional {
     }
 
 
-
-
-
-
-
-
     private void optional1() {
         System.out.println("optional1");
+        Transaction trans = new Transaction(new Trader("",""),0,Integer.MIN_VALUE);
+
+        int transMin = transactions.stream()
+                .map(Transaction::getValue)
+                .reduce(Integer::max)
+                .orElse(trans.getValue());
+        System.out.println(transMin);
 
     }
 
     private void optional2() {
         System.out.println("optional2");
+
+        Optional<Transaction> transEnOption = transactions.stream()
+                    .reduce( (a,b) -> a.getValue() > b.getValue() ? b : a);
+
+        if(transEnOption.isPresent())
+            System.out.println(transEnOption);
+        else
+            System.out.println("Optional est vide");
 
     }
 
