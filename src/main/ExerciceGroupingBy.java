@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.groupingBy;
+
 public class ExerciceGroupingBy {
     enum TransactionsLevel {
         VERY_HI, HI, LO, ME;
@@ -56,7 +58,9 @@ public class ExerciceGroupingBy {
 
     private void groupBy1() {
         System.out.println("GroupBy1");
-
+        Map<Trader, List<Transaction>> TraderList = transactions.stream()
+                                                .collect(groupingBy(Transaction::getTrader));
+        TraderList.entrySet().forEach(System.out::println);
     }
 
     private void groupBy2() {
