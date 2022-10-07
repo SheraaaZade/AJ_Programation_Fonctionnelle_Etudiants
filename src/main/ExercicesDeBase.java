@@ -139,11 +139,21 @@ public class ExercicesDeBase {
     private void reduce1() {
         System.out.println("reduce1");
         // TODO reduce
+
+        int max = transactions.stream()
+                .map(Transaction::getValue)
+                .reduce(Integer.MIN_VALUE, Integer::max);
+        System.out.println(max);
     }
 
     private void reduce2() {
         System.out.println("reduce2");
         // TODO reduce
+        Transaction trans = new Transaction(new Trader("",""),0,Integer.MAX_VALUE);
+        Transaction minTrans = transactions.stream()
+                .reduce(trans, (a,b) -> a.getValue() > b.getValue() ? b : a);
+        System.out.println(minTrans);
+
     }
 
 }
