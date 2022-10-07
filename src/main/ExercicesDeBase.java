@@ -133,8 +133,11 @@ public class ExercicesDeBase {
         System.out.println("sort2");
         var nomsTries = transactions
                 .stream()
-                .sorted(Comparator.comparing(trader -> trader.getTrader().getName()));
-        nomsTries.forEach(System.out::println);
+                .sorted(Comparator.comparing(trader -> trader.getTrader().getName()))
+                .map(Transaction::getTrader).distinct()
+                .map(Trader::getName).collect(Collectors.joining(", "));
+
+        System.out.println(nomsTries);
     }
     private void reduce1() {
         System.out.println("reduce1");
