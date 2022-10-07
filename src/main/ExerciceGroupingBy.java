@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 public class ExerciceGroupingBy {
@@ -66,11 +67,24 @@ public class ExerciceGroupingBy {
     private void groupBy2() {
         System.out.println("GroupBy2");
 
+        Map<Trader, Long> nbTransac = transactions.stream()
+                .collect(groupingBy(Transaction::getTrader,counting()));
+        nbTransac.entrySet().forEach(System.out::println);
     }
 
 
     private void groupBy3() {
         System.out.println("GroupBy3");
-
+        Map<TransactionsLevel, List<Transaction>> listLevel = transactions.stream()
+                .collect(
+                        groupingBy((level -> {
+                            if(level.getValue()>=1000) return TransactionsLevel.VERY_HI;
+                            else if(level.getValue() >= 800 && level.getValue() < 1000) return TransactionsLevel.HI;
+                            else if (level.getValue() >= 600 && level.getValue() < 800) return TransactionsLevel.ME;
+                            else
+                                return TransactionsLevel.LO;
+                        }))
+                );
+        listLevel.entrySet().forEach(System.out::println);
     }
 }
